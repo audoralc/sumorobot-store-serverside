@@ -14,8 +14,14 @@ class Orders extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-          $table->increments('id'); 
-        })
+          $table->increments('id');
+          $table->integer('userId');
+          $table->integer('prodId');
+          $table->integer('quantity');
+          $table->integer('cost');
+          $table->string('comment');
+          $table->timestamps();
+        });
     }
 
     /**
@@ -25,6 +31,6 @@ class Orders extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('orders');
     }
 }
