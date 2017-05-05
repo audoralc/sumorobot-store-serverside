@@ -15,7 +15,7 @@ class CategoryController extends Controller
       return Response::json($categories);
     }
 
-    public function store(Request $request)
+    public function storeCategory(Request $request)
     {
       $category = new Category;
       $category->category =
@@ -24,7 +24,7 @@ class CategoryController extends Controller
       $category->save();
     }
 
-    public function update($id, Request $request)
+    public function updateCategory($id, Request $request)
     {
       $category = Category::find($id);
 
@@ -36,14 +36,14 @@ class CategoryController extends Controller
       return Response::json(['success' => 'Category Updated.']);
     }
 
-    public function show($id)
+    public function showCategory($id)
     {
       $categories = Category::find($id);
 
       return Response::json($category);
     }
 
-    public function delete($id)
+    public function deleteCategory($id)
     {
       $categories = Category::find($id)
 

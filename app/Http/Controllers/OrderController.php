@@ -46,12 +46,12 @@ class OrderController extends Controller
 
   }
 
-  public function deleteProduct($id)
+  public function cancelOrder($id)
   {
-    $product = Product::find($id);
+    $product = Order::find($id);
     $product->delete();
 
-    return Respone::json(['success' => 'Product deleted.']);
+    return Respone::json(['success' => 'Order Cancelled']);
 
   }
 
