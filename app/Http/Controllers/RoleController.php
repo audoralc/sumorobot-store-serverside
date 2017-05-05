@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use Response;
+use Illuminate\Support\Facades\Validator;
+use Purifier;
 
 class RoleController extends Controller
 {
@@ -18,15 +20,35 @@ class RoleController extends Controller
 
   public function storeRole(Request $request)
   {
+    $rules = [
+      'name' => 'required',
+      'roleId' => 'required',
+    ];
+
+    $validator = Validator::make(Purifier::clean ($request->all()), $rules);
+
+    if ($validator->fails()) {
+      return Response::json(['error' => 'all fields required']);
+    }
+
     $role = new Role;
     $role->name =
     $request->input('name');
+    $role->roleId =
+    $request->input('roleId');
 
     $role->save;
   }
 
   public function updateRole()
   {
+    $rules = [
+      'name' => 'required',
+      'roleId' => 'required',
+    ];
+
+    $validator = Validator::make(Purifier::clean ($request->all()), $rules);
+
     $role = new Role;
     $role->name =
     $request->input('name');

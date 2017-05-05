@@ -30,7 +30,7 @@ class UserController extends Controller
     }
 
     else {
-      check=User::where('email', '=', $request->input('email')) ->orWhere('name', '=', $request->input('name'))->first();
+      $check=User::where('email', '=', $request->input('email')) ->orWhere('name', '=', $request->input('name'))->first();
 
       if (!empty($check)){
         return Response::json(['error' => 'user already exists']);
@@ -41,8 +41,10 @@ class UserController extends Controller
       $request->input('name');
       $user->email =
       $request->input('email');
+      $user->roleId = 2; 
       $user->password =
       Hash::make($request->input('password'));
+
 
       $user->save();
 
@@ -71,8 +73,5 @@ class UserController extends Controller
     return Response:: json(compact('token'));
   }
 
-  public function index()
-  {
-    return File::get('index.html');
-  }
+
 }

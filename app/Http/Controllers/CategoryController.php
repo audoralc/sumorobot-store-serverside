@@ -17,6 +17,12 @@ class CategoryController extends Controller
 
     public function storeCategory(Request $request)
     {
+      $rules = [
+        'category' => 'required',
+      ];
+
+      $validator = Validator::make(Purifier::clean ($request->all()), $rules);
+
       $category = new Category;
       $category->category =
       $request->input('category');
@@ -26,6 +32,12 @@ class CategoryController extends Controller
 
     public function updateCategory($id, Request $request)
     {
+      $rules = [
+        'category' => 'required',
+      ];
+
+      $validator = Validator::make(Purifier::clean ($request->all()), $rules);
+
       $category = Category::find($id);
 
       $category->category =

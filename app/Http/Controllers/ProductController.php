@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use Response;
+use Illuminate\Support\Facades\Validator;
+use Purifier;
 
 class ProductController extends Controller
 {
@@ -18,6 +20,19 @@ class ProductController extends Controller
 
   public function storeProduct(Request $request)
   {
+
+    $rules = [
+      'name' => 'required',
+      'catId' => 'required',
+      'availability' => 'required',
+      'price' => 'required',
+      'desccription' => 'required',
+      'image' => 'required',
+    ];
+
+    $validator = Validator::make(Purifier::clean ($request->all()), $rules);
+
+
     $product = new Product;
     $product->name =
     $request->input('name');
@@ -43,6 +58,18 @@ class ProductController extends Controller
 
   public function updateProduct($id, Request $request)
   {
+    $rules = [
+      'name' => 'required',
+      'catId' => 'required',
+      'availability' => 'required',
+      'price' => 'required',
+      'desccription' => 'required',
+      'image' => 'required',
+    ];
+
+    $validator = Validator::make(Purifier::clean ($request->all()), $rules);
+
+
     $product = Product::find($id);
 
     $product->name =
