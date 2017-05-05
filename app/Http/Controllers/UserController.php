@@ -25,7 +25,7 @@ class UserController extends Controller
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
 
-    if (if $validator->fails()) {
+    if ($validator->fails()) {
       return Response::json(['error' => 'all fields required']);
     }
 
@@ -68,7 +68,7 @@ class UserController extends Controller
     $cred= compact('email', 'password', ['email', 'password']);
 
     $token= JWAuth::attempt($cred);
-    return Response:: json(compact('token')); 
+    return Response:: json(compact('token'));
   }
 
   public function index()
