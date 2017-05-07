@@ -12,8 +12,16 @@ use JWTAuth;
 use File;
 
 
+
 class UserController extends Controller
 {
+  public function indexUsers()
+  {
+    $users = User::all();
+
+    return Response::json($users)
+  }
+
   public function storeUser(Request $request) {
 
     $rules = [
@@ -41,7 +49,7 @@ class UserController extends Controller
       $request->input('name');
       $user->email =
       $request->input('email');
-      $user->roleId = 2; 
+      $user->roleId = 2;
       $user->password =
       Hash::make($request->input('password'));
 
@@ -50,6 +58,34 @@ class UserController extends Controller
 
       return Response::json(['success' => 'user registered']);
     }
+  }
+  public function updateUser($id, Request $request)
+  {
+    $user = User::find($id);
+
+    $user->email = $request->input('email');
+    $user->name = $request->input('name');
+    $user->password = $request->input('password');
+
+    $user->save();
+
+    return Response::json(['success' => 'User Updated.'])
+  }
+
+  public function showUser($id)
+  {
+    $user = User::find($id);
+
+    return Response::json($user);
+  }
+
+  public function deleteUser($id)
+  {
+    $user = User::find($id);
+
+    $user->delete();
+
+    return Response::json(['success' => "User deleted."]); 
   }
 
   public function signIn(Request $request)
