@@ -28,10 +28,14 @@ class OrderController extends Controller
 
     }
   }
+$order= new Order;
+
+
+$subtotal= $request->input('subtotal'); 
+$total =  $subtotal + 10.00;
 
 
 
-  $order= new Order;
   $order->userId =
   $request->input('userId');
   $order->address =
@@ -41,6 +45,7 @@ class OrderController extends Controller
   $request->input('quantity');
   $order->comment =
   $request->input('comment');
+  $order->total =$total;
 
   $order->save();
 
