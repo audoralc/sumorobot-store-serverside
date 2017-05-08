@@ -8,10 +8,10 @@ class OrderController extends Controller
 {
   public function placeOrder (Request $request) {
     $rules = [
-      'userId' => 'required';
-      'address' => 'required';
-      'prodId' => 'required';
-      'quantity' => 'required';
+      'userId' => 'required',
+      'address' => 'required',
+      'prodId' => 'required',
+      'quantity' => 'required',
     ]
   };
 
@@ -37,7 +37,7 @@ $total =  $subtotal + 10.00;
 
 
   $order->userId =
-  $request->input('userId');
+  Auth::user()->id;
   $order->address =
   $request->input('address');
   $order->prodId-> input('prodId');

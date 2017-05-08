@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use Response;
+use Illuminate\Support\Facades\Validator;
+use Purifier;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-      $categories = Category::all();
+      $category = Category::all();
 
-      return Response::json($categories);
+      return Response::json($category);
     }
 
     public function storeCategory(Request $request)
@@ -50,16 +52,16 @@ class CategoryController extends Controller
 
     public function showCategory($id)
     {
-      $categories = Category::find($id);
+      $category = Category::find($id);
 
       return Response::json($category);
     }
 
     public function deleteCategory($id)
     {
-      $categories = Category::find($id)
+      $category = Category::find($id);
 
-      $categories->delete();
+      $category->delete();
 
       return Response::json(['success' => "Category deleted."]);
     }

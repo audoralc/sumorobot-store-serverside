@@ -71,6 +71,6 @@ class RoleController extends Controller
     $role = Role::find($id);
     $role->delete();
 
-    return Response::json(['success' => 'Role Deleted.'])
+    return Response::json(['success' => 'Role Deleted.']);
   }
 }

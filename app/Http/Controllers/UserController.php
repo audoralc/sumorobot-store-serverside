@@ -19,17 +19,17 @@ class UserController extends Controller
   {
     $users = User::all();
 
-    return Response::json($users)
+    return Response::json($users);
   }
 
   public function storeUser(Request $request) {
 
     $rules = [
-      'name' => 'required';
-      'email' => 'required';
-      'password' => 'required';
-      'roleID' => 'required';
-    ]
+      'name' => 'required',
+      'email' => 'required',
+      'password' => 'required',
+      'roleId' => 'required',
+    ];
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
 
@@ -69,7 +69,7 @@ class UserController extends Controller
 
     $user->save();
 
-    return Response::json(['success' => 'User Updated.'])
+    return Response::json(['success' => 'User Updated.']);
   }
 
   public function showUser($id)
@@ -85,7 +85,7 @@ class UserController extends Controller
 
     $user->delete();
 
-    return Response::json(['success' => "User deleted."]); 
+    return Response::json(['success' => "User deleted."]);
   }
 
   public function signIn(Request $request)
