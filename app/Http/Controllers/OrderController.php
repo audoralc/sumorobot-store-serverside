@@ -31,7 +31,7 @@ class OrderController extends Controller
 $order= new Order;
 
 
-$subtotal= $request->input('subtotal'); 
+$subtotal= $request->input('subtotal');
 $total =  $subtotal + 10.00;
 
 
@@ -60,4 +60,31 @@ $total =  $subtotal + 10.00;
 
   }
 
+
+  public function updateOrder($id, Request $request)
+  {
+    $order = Order::find($id);
+
+    $order->userId =
+    $request->input('userId');
+    $order->address =
+    $request->input('address');
+    $order->prodId-> input('prodId');
+    $order->quantity =
+    $request->input('quantity');
+    $order->comment =
+    $request->input('comment');
+    $order->total =$total;
+
+    $order->save();
+
+    return Response::json(['success' => 'Order Updated.'])
+  }
+
+  public function showOrder($id)
+  {
+    $order = Order::find($id);
+
+    return Response::json($user);
+  }
 }

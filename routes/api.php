@@ -12,34 +12,33 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-/*
-Route::post('storeCategory');
-Route::post('updateCategory');
-Route::get('showCategory');
-Route::post('deleteCategory');
 
-Route::post('storeProduct');
-Route::post('updateProduct');
-Route::get('showProduct');
-Route::post('deleteProduct');
+Route::post('storeCategory', 'CategoryController@storeCategory');
+Route::post('updateCategory/{id}', 'CategoryController@updateCategory');
+Route::get('showCategory/{id}', 'CategoryController@showCategory');
+Route::post('deleteCategory/{id}', 'CategoryController@deleteCategory');
 
+Route::post('storeProduct', 'ProductController@storeProduct');
+Route::post('updateProduct/{id}', 'ProductController@updateProduct');
+Route::get('showProduct/{id}', 'ProductController@showProduct');
+Route::post('deleteProduct/{id}', 'ProductController@deleteProduct');
 
-Route::('indexRoles');
-Route::get('storeRole');
-Route::post('updateRole');
-Route::get('showRole');
+Route::get('storeRole', 'RoleController@storeRole');
+Route::post('updateRole/{id}', 'RoleController@updateRole');
+Route::get('showRole/{id}', 'RoleController@showRole');
 Route::post('deleteRole/{id}', 'RoleController@deleteRole');
 
 Route::post('storeUser', 'UserController@storeUser');
 Route::post('signIn', 'UserController@signIn');
-Route::('userIndex');
-Route::post('updateUser');
-Route::get('showUser');
-Route::post('deleteUser');
-*/
+Route::post('updateUser/{id}', 'UserController@updateUser');
+Route::get('showUser/{id}', 'UserController@showUser');
+Route::post('deleteUser/{id}', 'UserController@deleteUser');
+Route::get('indexUsers', 'UserController@indexUsers');
 
-
-
+Route::post('placeOrder', 'OrderController@placeOrder');
+Route::post('cancelOrder/{id}', 'OrderController@cancelOrder');
+Route::post('updateOrder/{id}', 'OrderController@updateOrder');
+Route::get('showOrder/{id}', 'OrderController@showOrder');
 
 
 Route::any('{path?}', 'MainController@index')->where("path", ".+");
