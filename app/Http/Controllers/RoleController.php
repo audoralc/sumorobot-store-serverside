@@ -35,6 +35,8 @@ class RoleController extends Controller
     $request->input('name');
 
     $role->save;
+
+    return Response::json(['success' => 'Role created.']);
   }
 
   public function updateRole($id, Request $request)
@@ -52,7 +54,6 @@ class RoleController extends Controller
     $role->save();
 
     return Response::json(['success' => 'Role Updated']);
-
   }
 
   public function showRole($id)

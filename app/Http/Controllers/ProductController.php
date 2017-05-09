@@ -1,4 +1,4 @@
-3<?php
+<?php
 
 namespace App\Http\Controllers;
 
@@ -26,7 +26,7 @@ class ProductController extends Controller
       'catId' => 'required',
       'availability' => 'required',
       'price' => 'required',
-      'desccription' => 'required',
+      'description' => 'required',
       'image' => 'required',
     ];
 
@@ -38,14 +38,14 @@ class ProductController extends Controller
     $request->input('name');
     $product->catId =
     $request->input('catId');
-    $product->availability
+    $product->availability =
     $request->input('availability');
-    $product->price
+    $product->price =
     $request->input('price');
-    $product->description
+    $product->description =
     $request->input('description');
 
-    $image=$request->file('image');
+    $image= $request->file('image');
     $imageName=
     $image->getClientOriginalName();
     $image->move('storage/', $imageName);
@@ -54,6 +54,8 @@ class ProductController extends Controller
     $request->root().'/storage/'.$imageName;
 
     $product->save();
+
+    return Response::json(['success' => 'Product added']);
   }
 
   public function updateProduct($id, Request $request)
@@ -63,7 +65,7 @@ class ProductController extends Controller
       'catId' => 'required',
       'availability' => 'required',
       'price' => 'required',
-      'desccription' => 'required',
+      'description' => 'required',
       'image' => 'required',
     ];
 
@@ -76,19 +78,19 @@ class ProductController extends Controller
     $request->input('name');
     $product->catId =
     $request->input('catId');
-    $product->availability
+    $product->availability =
     $request->input('availability');
-    $product->price
+    $product->price =
     $request->input('price');
-    $product->description
+    $product->description =
     $request->input('description');
 
     $image=$request->file('image');
     $imageName=
     $image->getClientOriginalName();
-    $image->move('', $imageName);
+    $image->move('storage/', $imageName);
     $product->image=
-    $request->root().''.$imageName;
+    $request->root().'/storage/'.$imageName;
 
     $product->save();
 

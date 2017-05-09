@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Purifier;
+use Response;
 
 class OrderController extends Controller
 {
@@ -11,8 +15,7 @@ class OrderController extends Controller
       'address' => 'required',
       'prodId' => 'required',
       'quantity' => 'required',
-    ]
-  };
+    ];
 
   $validator = Validator::make(Purifier::clean($request->all()), $rules);
 
@@ -22,13 +25,13 @@ class OrderController extends Controller
 
   else {
     $userID = Auth::user()->id;
-    $check=Order::where('address', '=', $request->(input('address')))->orWhere('quantity','=',
-     $request(input->('quantity')))->first();
+    $check=Order::where('address', '=', $request->input->('address'))->orWhere('quantity','=',
+    $request->input->('quantity'))->first();
 
     if(!empty($check)){
-
+      return Response::json(['error' => 'order already exists']);
     }
-  }
+  
 
   $order= new Order;
 
@@ -46,6 +49,8 @@ class OrderController extends Controller
   $order->total =$total;
 
   $order->save();
+
+  return Response::json(['success' => 'Order placed']);
 
   }
 
@@ -114,5 +119,5 @@ public function orderIndex()
 {
   $orders = Order::all();
 
-  return Response:: json($orders); 
+  return Response:: json($orders);
 }

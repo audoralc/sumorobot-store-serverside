@@ -33,7 +33,7 @@ class UserController extends Controller
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
 
     if ($validator->fails()) {
-      return Response::json(['error' => 'all fields required']);
+    return Response::json(['error' => 'all fields required']);
     }
 
     else {
@@ -88,6 +88,9 @@ class UserController extends Controller
 
     return Response::json(['success' => 'User Updated.']);
   }
+
+}
+
 
   public function showUser($id)
   {

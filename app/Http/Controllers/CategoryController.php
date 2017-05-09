@@ -30,6 +30,8 @@ class CategoryController extends Controller
       $request->input('category');
 
       $category->save();
+
+      return Response::json(['success' => 'Category Created']);
     }
 
     public function updateCategory($id, Request $request)
@@ -47,7 +49,7 @@ class CategoryController extends Controller
 
       $category->save();
 
-      return Response::json(['success' => 'Category Updated.']);
+      return Response::json(['success' => 'Category Updated.']);    
     }
 
     public function showCategory($id)
