@@ -28,7 +28,6 @@ class UserController extends Controller
       'name' => 'required',
       'email' => 'required',
       'password' => 'required',
-      'roleId' => 'required',
     ];
 
     $validator = Validator::make(Purifier::clean($request->all()), $rules);
@@ -61,6 +60,24 @@ class UserController extends Controller
   }
   public function updateUser($id, Request $request)
   {
+  $rules = [
+    'name' => 'required',
+    'email' => 'required',
+    'password' => 'required',
+  ];
+
+  $validator = Validator::make(Purifier::clean($request->all()), $rules);
+
+  if ($validator->fails()) {
+    return Response::json(['error' => 'all fields required']);
+  }
+
+  else {
+    $check=User::where('email', '=', $request->input('email')) ->orWhere('name', '=', $request->input('name'))->first();
+
+    if (!empty($check)){
+      return Response::json(['error' => 'update failed']);
+    }
     $user = User::find($id);
 
     $user->email = $request->input('email');

@@ -22,7 +22,6 @@ class RoleController extends Controller
   {
     $rules = [
       'name' => 'required',
-      'roleId' => 'required',
     ];
 
     $validator = Validator::make(Purifier::clean ($request->all()), $rules);
@@ -34,17 +33,14 @@ class RoleController extends Controller
     $role = new Role;
     $role->name =
     $request->input('name');
-    $role->roleId =
-    $request->input('roleId');
 
     $role->save;
   }
 
-  public function updateRole()
+  public function updateRole($id, Request $request)
   {
     $rules = [
       'name' => 'required',
-      'roleId' => 'required',
     ];
 
     $validator = Validator::make(Purifier::clean ($request->all()), $rules);

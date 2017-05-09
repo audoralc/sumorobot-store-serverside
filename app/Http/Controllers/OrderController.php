@@ -8,7 +8,6 @@ class OrderController extends Controller
 {
   public function placeOrder (Request $request) {
     $rules = [
-      'userId' => 'required',
       'address' => 'required',
       'prodId' => 'required',
       'quantity' => 'required',
@@ -22,19 +21,18 @@ class OrderController extends Controller
   }
 
   else {
-    check=Order::where('userId', '=', $request->input('userId'))->orWhere('address', '=', $request->(input('address')))->orWhere('quantity','=', $request(input->('quantity')))->first();
+    $userID = Auth::user()->id;
+    $check=Order::where('address', '=', $request->(input('address')))->orWhere('quantity','=',
+     $request(input->('quantity')))->first();
 
     if(!empty($check)){
 
     }
   }
-$order= new Order;
 
+  $order= new Order;
 
-$subtotal= $request->input('subtotal');
-$total =  $subtotal + 10.00;
-
-
+  $total =  $subtotal + 10.00;
 
   $order->userId =
   Auth::user()->id;
@@ -63,6 +61,29 @@ $total =  $subtotal + 10.00;
 
   public function updateOrder($id, Request $request)
   {
+    $rules = [
+      'address' => 'required',
+      'prodId' => 'required',
+      'quantity' => 'required',
+    ]
+  };
+
+  $validator = Validator::make(Purifier::clean($request->all()), $rules);
+
+  if ($validator->fails()) {
+    return Response::json(['error' => 'all fields requried']);
+  }
+
+  else {
+    $userID = Auth::user()->id;
+    $check=Order::where('address', '=', $request->(input('address')))->orWhere('quantity','=',
+     $request(input->('quantity')))->first();
+
+    if(!empty($check)){
+
+    }
+  }
+
     $order = Order::find($id);
 
     $order->userId =
@@ -85,6 +106,13 @@ $total =  $subtotal + 10.00;
   {
     $order = Order::find($id);
 
-    return Response::json($user);
+    return Response::json($order);
   }
+}
+
+public function orderIndex()
+{
+  $orders = Order::all();
+
+  return Response:: json($orders); 
 }

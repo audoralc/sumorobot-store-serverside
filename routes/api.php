@@ -39,6 +39,7 @@ Route::post('placeOrder', 'OrderController@placeOrder');
 Route::post('cancelOrder/{id}', 'OrderController@cancelOrder');
 Route::post('updateOrder/{id}', 'OrderController@updateOrder');
 Route::get('showOrder/{id}', 'OrderController@showOrder');
+Route::get('orderIndex', 'OrderController@orderIndex'); 
 
 
 Route::any('{path?}', 'MainController@index')->where("path", ".+");
