@@ -12,7 +12,6 @@ class Roles extends Migration
           (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('roleId');
             $table->timestamps();
         });
         }

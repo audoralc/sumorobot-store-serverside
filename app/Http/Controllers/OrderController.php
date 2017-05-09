@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Product;
+use App\Order; 
 use Purifier;
 use Response;
 
@@ -31,7 +33,13 @@ class OrderController extends Controller
     if(!empty($check)){
       return Response::json(['error' => 'order already exists']);
     }
-  
+
+  $product= Product::find($request->input('prodId'));
+  if empty($product) {
+    return Response::json(['error' => 'product does not exist']);
+  }
+
+
 
   $order= new Order;
 
@@ -47,6 +55,13 @@ class OrderController extends Controller
   $order->comment =
   $request->input('comment');
   $order->total =$total;
+
+  $order->totalPrice=
+  $request->input('quantity')*$product->price;
+
+  if ($product->availability=0) {
+    return Response::json(['error'=>'product out of stock']);
+  }
 
   $order->save();
 

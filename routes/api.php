@@ -23,7 +23,7 @@ Route::post('updateProduct/{id}', 'ProductController@updateProduct');
 Route::get('showProduct/{id}', 'ProductController@showProduct');
 Route::post('deleteProduct/{id}', 'ProductController@deleteProduct');
 
-Route::get('storeRole', 'RoleController@storeRole');
+Route::post('storeRole', 'RoleController@storeRole');
 Route::post('updateRole/{id}', 'RoleController@updateRole');
 Route::get('showRole/{id}', 'RoleController@showRole');
 Route::post('deleteRole/{id}', 'RoleController@deleteRole');
@@ -39,7 +39,7 @@ Route::post('placeOrder', 'OrderController@placeOrder');
 Route::post('cancelOrder/{id}', 'OrderController@cancelOrder');
 Route::post('updateOrder/{id}', 'OrderController@updateOrder');
 Route::get('showOrder/{id}', 'OrderController@showOrder');
-Route::get('orderIndex', 'OrderController@orderIndex'); 
+Route::get('orderIndex', 'OrderController@orderIndex');
 
 
 Route::any('{path?}', 'MainController@index')->where("path", ".+");
