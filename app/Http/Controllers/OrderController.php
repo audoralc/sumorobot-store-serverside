@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Validator;
 use App\Product;
-use App\Order; 
+use App\Order;
 use Purifier;
 use Response;
+use Auth; 
 
 class OrderController extends Controller
 {
@@ -27,15 +28,15 @@ class OrderController extends Controller
 
   else {
     $userID = Auth::user()->id;
-    $check=Order::where('address', '=', $request->input->('address'))->orWhere('quantity','=',
-    $request->input->('quantity'))->first();
+    $check=Order::where('address', '=', $request->input('address'))->orWhere('quantity','=',
+    $request->input('quantity'))->first();
 
     if(!empty($check)){
       return Response::json(['error' => 'order already exists']);
     }
 
   $product= Product::find($request->input('prodId'));
-  if empty($product) {
+  if (empty($product)) {
     return Response::json(['error' => 'product does not exist']);
   }
 
@@ -67,14 +68,14 @@ class OrderController extends Controller
 
   return Response::json(['success' => 'Order placed']);
 
-  }
+}}
 
   public function cancelOrder($id)
   {
     $product = Order::find($id);
     $product->delete();
 
-    return Respone::json(['success' => 'Order Cancelled']);
+    return Response::json(['success' => 'Order Cancelled']);
 
   }
 
@@ -85,8 +86,8 @@ class OrderController extends Controller
       'address' => 'required',
       'prodId' => 'required',
       'quantity' => 'required',
-    ]
-  };
+    ];
+
 
   $validator = Validator::make(Purifier::clean($request->all()), $rules);
 
@@ -96,8 +97,8 @@ class OrderController extends Controller
 
   else {
     $userID = Auth::user()->id;
-    $check=Order::where('address', '=', $request->(input('address')))->orWhere('quantity','=',
-     $request(input->('quantity')))->first();
+    $check=Order::where('address', '=', $request->input('address'))->orWhere('quantity','=',
+     $request->input('quantity'))->first();
 
     if(!empty($check)){
 
@@ -119,7 +120,7 @@ class OrderController extends Controller
 
     $order->save();
 
-    return Response::json(['success' => 'Order Updated.'])
+    return Response::json(['success' => 'Order Updated.']);
   }
 
   public function showOrder($id)
@@ -128,11 +129,12 @@ class OrderController extends Controller
 
     return Response::json($order);
   }
-}
+
 
 public function orderIndex()
 {
   $orders = Order::all();
 
   return Response:: json($orders);
+}
 }

@@ -125,8 +125,8 @@ class UserController extends Controller
     $password= $request->input('password');
     $cred= compact('email', 'password', ['email', 'password']);
 
-    $token= JWAuth::attempt($cred);
-    return Response:: json(compact('token'));
+    $token= JWTAuth::attempt($cred);
+    return Response::json(compact('token'));
   }
 
 

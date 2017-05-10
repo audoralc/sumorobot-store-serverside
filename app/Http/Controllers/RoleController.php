@@ -35,7 +35,7 @@ class RoleController extends Controller
     $role->name =
     $request->input('name');
 
-    $role->save;
+    $role->save();
 
     return Response::json(['success' => 'Role created.']);
   }
