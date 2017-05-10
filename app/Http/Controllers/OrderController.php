@@ -9,10 +9,16 @@ use App\Product;
 use App\Order;
 use Purifier;
 use Response;
-use Auth; 
+use Auth;
 
 class OrderController extends Controller
 {
+
+  public function __construct()
+  {
+      $this->middleware('jwt.auth', ['only' => ['placeOrder', 'updateOrder'] ]);
+  }
+
   public function placeOrder (Request $request) {
     $rules = [
       'address' => 'required',
@@ -27,7 +33,7 @@ class OrderController extends Controller
   }
 
   else {
-    $userID = Auth::user()->id;
+    $userId=Auth::user()->id;
     $check=Order::where('address', '=', $request->input('address'))->orWhere('quantity','=',
     $request->input('quantity'))->first();
 
@@ -44,20 +50,20 @@ class OrderController extends Controller
 
   $order= new Order;
 
-  $total =  $subtotal + 10.00;
 
   $order->userId =
   Auth::user()->id;
   $order->address =
   $request->input('address');
-  $order->prodId-> input('prodId');
+  $order->prodId =
+  $request->input('prodId');
   $order->quantity =
   $request->input('quantity');
   $order->comment =
   $request->input('comment');
-  $order->total =$total;
 
-  $order->totalPrice=
+
+  $order->cost=
   $request->input('quantity')*$product->price;
 
   if ($product->availability=0) {
@@ -96,7 +102,7 @@ class OrderController extends Controller
   }
 
   else {
-    $userID = Auth::user()->id;
+    $userId=Auth::user()->id;
     $check=Order::where('address', '=', $request->input('address'))->orWhere('quantity','=',
      $request->input('quantity'))->first();
 
@@ -108,15 +114,16 @@ class OrderController extends Controller
     $order = Order::find($id);
 
     $order->userId =
-    $request->input('userId');
+    Auth::user()->id;
     $order->address =
     $request->input('address');
-    $order->prodId-> input('prodId');
+    $order->prodId =
+    $request->input('prodId');
     $order->quantity =
     $request->input('quantity');
     $order->comment =
     $request->input('comment');
-    $order->total =$total;
+
 
     $order->save();
 

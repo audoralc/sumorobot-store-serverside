@@ -48,7 +48,7 @@ class RoleController extends Controller
 
     $validator = Validator::make(Purifier::clean ($request->all()), $rules);
 
-    $role = new Role;
+    $role = Role::find($id);
     $role->name =
     $request->input('name');
 
