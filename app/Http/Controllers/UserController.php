@@ -17,6 +17,12 @@ class UserController extends Controller
 {
   public function indexUsers()
   {
+    $user=Auth::user();
+    if ($user->roleId != 1)
+    {
+      return Response::json(['error' => "not allowed"])
+    };
+    
     $users = User::all();
 
     return Response::json($users);

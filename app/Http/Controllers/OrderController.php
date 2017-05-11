@@ -46,8 +46,6 @@ class OrderController extends Controller
     return Response::json(['error' => 'product does not exist']);
   }
 
-
-
   $order= new Order;
 
 
@@ -78,6 +76,13 @@ class OrderController extends Controller
 
   public function cancelOrder($id)
   {
+
+    $order=Order::find($id);
+    $user=Auth::user();
+    if ($user->roleId!=1 || $user->id!= $order->userId){
+      return Response::json(['error' => 'access denied']);
+    }
+
     $product = Order::find($id);
     $product->delete();
 
@@ -88,6 +93,13 @@ class OrderController extends Controller
 
   public function updateOrder($id, Request $request)
   {
+
+    $order=Order::find($id);
+    $user=Auth::user();
+    if ($user->roleId!=1 || $user->id!= $order->userId){
+      return Response::json(['success' => 'acess denied']);
+    }
+
     $rules = [
       'address' => 'required',
       'prodId' => 'required',
@@ -140,6 +152,12 @@ class OrderController extends Controller
 
 public function orderIndex()
 {
+  $user=Auth::user();
+  if ($user->roleId != 1)
+  {
+    return Response::json(['error' => "not allowed"])
+  };
+
   $orders = Order::all();
 
   return Response:: json($orders);

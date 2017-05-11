@@ -12,6 +12,12 @@ class CategoryController extends Controller
 {
     public function index()
     {
+      $user=Auth::user();
+      if ($user->roleId != 1)
+      {
+        return Response::json(['error' => "not allowed"])
+      };
+
       $category = Category::all();
 
       return Response::json($category);
@@ -24,6 +30,12 @@ class CategoryController extends Controller
       ];
 
       $validator = Validator::make(Purifier::clean ($request->all()), $rules);
+
+      $user=Auth::user();
+      if ($user->roleId != 1)
+      {
+      return Response::json(['error' => "not allowed"])
+      };
 
       $category = new Category;
       $category->category =
@@ -42,6 +54,12 @@ class CategoryController extends Controller
 
       $validator = Validator::make(Purifier::clean ($request->all()), $rules);
 
+      $user=Auth::user();
+      if ($user->roleId != 1)
+      {
+      return Response::json(['error' => "not allowed"])
+      };
+
       $category = Category::find($id);
 
       $category->category =
@@ -49,11 +67,17 @@ class CategoryController extends Controller
 
       $category->save();
 
-      return Response::json(['success' => 'Category Updated.']);    
+      return Response::json(['success' => 'Category Updated.']);
     }
 
     public function showCategory($id)
     {
+      $user=Auth::user();
+      if ($user->roleId != 1)
+      {
+        return Response::json(['error' => "not allowed"])
+      };
+
       $category = Category::find($id);
 
       return Response::json($category);
@@ -61,6 +85,12 @@ class CategoryController extends Controller
 
     public function deleteCategory($id)
     {
+      $user=Auth::user();
+      if ($user->roleId != 1)
+      {
+        return Response::json(['error' => "not allowed"])
+      };
+
       $category = Category::find($id);
 
       $category->delete();

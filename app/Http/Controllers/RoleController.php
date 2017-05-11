@@ -13,6 +13,12 @@ class RoleController extends Controller
 {
   public function indexRoles()
   {
+    $user=Auth::user();
+    if ($user->roleId != 1)
+    {
+      return Response::json(['error' => "not allowed"])
+    };
+
     $roles = Role::all();
 
     return Response::json($roles);
@@ -21,6 +27,12 @@ class RoleController extends Controller
 
   public function storeRole(Request $request)
   {
+    $user=Auth::user();
+    if ($user->roleId != 1)
+    {
+      return Response::json(['error' => "not allowed"])
+    };
+
     $rules = [
       'name' => 'required',
     ];
@@ -48,6 +60,12 @@ class RoleController extends Controller
 
     $validator = Validator::make(Purifier::clean ($request->all()), $rules);
 
+    $user=Auth::user();
+    if ($user->roleId != 1)
+    {
+      return Response::json(['error' => "not allowed"])
+    };
+
     $role = Role::find($id);
     $role->name =
     $request->input('name');
@@ -59,6 +77,12 @@ class RoleController extends Controller
 
   public function showRole($id)
   {
+    $user=Auth::user();
+    if ($user->roleId != 1)
+    {
+      return Response::json(['error' => "not allowed"])
+    };
+
     $role = Role::find($id);
 
     return Response::json($role);
@@ -66,6 +90,12 @@ class RoleController extends Controller
 
   public function deleteRole($id)
   {
+    $user=Auth::user();
+    if ($user->roleId != 1)
+    {
+      return Response::json(['error' => "not allowed"])
+    };
+
     $role = Role::find($id);
     $role->delete();
 

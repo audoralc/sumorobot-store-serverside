@@ -32,6 +32,11 @@ class ProductController extends Controller
 
     $validator = Validator::make(Purifier::clean ($request->all()), $rules);
 
+    $user=Auth::user();
+    if ($user->roleId != 1)
+    {
+    return Response::json(['error' => "not allowed"])
+    };
 
     $product = new Product;
     $product->name =
@@ -71,6 +76,11 @@ class ProductController extends Controller
 
     $validator = Validator::make(Purifier::clean ($request->all()), $rules);
 
+    $user=Auth::user();
+    if ($user->roleId != 1)
+    {
+    return Response::json(['error' => "not allowed"])
+    };
 
     $product = Product::find($id);
 
@@ -106,6 +116,12 @@ class ProductController extends Controller
 
   public function deleteProduct($id)
   {
+    $user=Auth::user();
+    if ($user->roleId != 1)
+    {
+    return Response::json(['error' => "not allowed"])
+    };
+
     $product = Product::find($id);
     $product->delete();
 
